@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+.navbarComponent {
+    height: 96px;
+    margin: 0 0 36px;
+    padding: 0 0 9px;
+    box-shadow: 0 3px 27px 0 rgba(0, 0, 0, 0.3);
+}
+
+.letterM {
+    width: 30px;
+    height: 30px;
+    /* margin: 0px 180px 0 120px; */
+    font-size: 33px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+}
+
+.manifestoName {
+    width: 60px;
+    height: 12px;
+    /* margin: 28px 165px 0 145px; */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+}
+
+.hamButton {
+    width: 30px;
+    height: 30px;
+    margin: 10px 105px 0 30px;
+}
+
+/* .toggle-btn {
+    @apply [&>div::before]:translate-y-0 [&>div::before]:rotate-45 [&>div::after]:translate-y-0 [&>div::after]:-rotate-45 [&>div]:bg-transparent [&>div]:rotate-[360deg] 
+} */
