@@ -10,7 +10,6 @@
 .letterM {
     width: 30px;
     height: 30px;
-    /* margin: 0px 180px 0 120px; */
     font-size: 33px;
     font-weight: normal;
     font-stretch: normal;
@@ -23,7 +22,6 @@
 .manifestoName {
     width: 60px;
     height: 12px;
-    /* margin: 28px 165px 0 145px; */
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -37,7 +35,6 @@
 .hamButton {
     width: 30px;
     height: 30px;
-    margin: 10px 105px 0 30px;
 }
 
 /* .toggle-btn {
