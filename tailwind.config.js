@@ -1,16 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    // './pages/*.{js,ts,jsx,tsx,mdx}',
+    // './components/**/*.{js,ts,jsx,tsx,mdx}',
+    // './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
         'bgColor-Home': '#19192e',
         'bgColor-Navbar': '#1f1f39',
-        'Color-M&BTN': '#eea86c'
+        'Color-M&BTN': '#eea86c',
+        'bgColor-SignInForm': '#9393aa',
+        'bgColor-Form': '#f5f5f5',
+        'ColorBorder-Inputs': '#1f1f39',
+        'Color-SubmitForm': '#838bc8'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
