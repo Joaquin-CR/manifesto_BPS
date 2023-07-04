@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import styles from './Home.module.css'
 
 export default function Home() {
   return (
@@ -19,7 +18,7 @@ export default function Home() {
       </div>
       <div>
         <button className='w-44 h-14 flex-grow-0 py-3 px-8
-         bg-Color-M&BTN text-black btnSignInFont'>Sign In</button>
+         bg-Color-M&BTN text-black Inter'>Sign In</button>
       </div>
     </>
   )

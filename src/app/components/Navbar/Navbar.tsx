@@ -10,7 +10,7 @@ export default function Navbar() {
 
 
     const content = (
-        <div className={`${styles.navbarComponent} w-screen bg-bgColor-Navbar`}>
+        <div className={`${styles.navbarComponent} w-screen bg-bgColor-Navbar h-24 pb-3`}>
             <div className='pl-8'>
                 {/*ANIMACION ${effect && styles.toggle-btn} */}
                 <button id="hamburger-button" className={`text-3xl cursor-pointer`} onClick={() => { setEffect(effect ? false : true); setShow(show ? false : true); }}>
@@ -18,8 +18,8 @@ export default function Navbar() {
                 </button>
             </div>
             <div className='grid place-items-center lg:ml-32 lg:place-items-start xl:place-items-start xl:ml-32'>
-                <div className={`${styles.letterM} font-Modern mb-2 text-center text-Color-M&BTN`}>M</div>
-                <span className={`${styles.manifestoName} text-white text-center`}>
+                <div className='font-Modern mb-2 text-center text-Color-M&BTN text-4xl w-8 h-8'>M</div>
+                <span className={`${styles.manifestoName} text-white text-center font-semibold text-xs w-14`}>
                     Manifesto
                 </span>
             </div>
