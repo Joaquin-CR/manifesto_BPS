@@ -118,102 +118,90 @@ export default function SignInForm() {
           <div className="h-auto mt-4 mx-5 drop-shadow-xl bg-bgColor-Form flex flex-col items-center justify-center">
             {/* mb-9 */}
             {/* INPUT NAME */}
-            <section className="mb-7">
-              <input
-                className={`w-4/5 mx-8 mt-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs ${
-                  errors.nombre && "border-Color-ErrorValidation"
-                }`}
-                placeholder="Full Name"
-                type="text"
-                id="nombre"
-                name="nombre"
-                value={formData.nombre}
-                onChange={handleInputChange}
-              />
-              {errors.nombre && (
-                <span className="text-Color-ErrorValidation mx-8">
-                  {errors.nombre}
-                </span>
-              )}
-            </section>
+            <input
+              className={`w-4/5 mx-8 mt-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-7 ${
+                errors.nombre && "border-Color-ErrorValidation mb-0"
+              }`}
+              placeholder="Full Name"
+              type="text"
+              id="nombre"
+              name="nombre"
+              value={formData.nombre}
+              onChange={handleInputChange}
+            />
+            {errors.nombre && (
+              <span className="text-Color-ErrorValidation mx-8 mb-1">
+                {errors.nombre}
+              </span>
+            )}
             {/* INPUT PHONE  */}
-            <section className="mb-7">
-              <input
-                className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs ${
-                  errors.telefono && "border-Color-ErrorValidation"
-                }`}
-                placeholder="Phone Number"
-                type="text"
-                id="telefono"
-                name="telefono"
-                value={formData.telefono}
-                onChange={handleInputChange}
-              />
-              {errors.telefono && (
-                <span className="text-Color-ErrorValidation mx-8">
-                  {errors.telefono}
-                </span>
-              )}
-            </section>
+            <input
+              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-7 ${
+                errors.telefono && "border-Color-ErrorValidation mb-0"
+              }`}
+              placeholder="Phone Number"
+              type="text"
+              id="telefono"
+              name="telefono"
+              value={formData.telefono}
+              onChange={handleInputChange}
+            />
+            {errors.telefono && (
+              <span className="text-Color-ErrorValidation mx-8 mb-1">
+                {errors.telefono}
+              </span>
+            )}
             {/* INPUT MAIL */}
-            <section className="mb-7">
-              <input
-                type="email"
-                id="mail"
-                name="mail"
-                value={formData.mail}
-                onChange={handleInputChange}
-                className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs ${
-                  errors.mail && "border-Color-ErrorValidation"
-                }`}
-                placeholder="Email"
-              />
-              {errors.mail && (
-                <span className="text-Color-ErrorValidation mx-8">
-                  {errors.mail}
-                </span>
-              )}
-            </section>
-
+            <input
+              type="email"
+              id="mail"
+              name="mail"
+              value={formData.mail}
+              onChange={handleInputChange}
+              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-7 ${
+                errors.mail && "border-Color-ErrorValidation mb-0"
+              }`}
+              placeholder="Email"
+            />
+            {errors.mail && (
+              <span className="text-Color-ErrorValidation mx-8 mb-1">
+                {errors.mail}
+              </span>
+            )}
             {/* INPUT EMERGENCY CONTACT NAME */}
-            <section className="mb-7">
-              <input
-                type="text"
-                id="emergencyName"
-                name="emergencyName"
-                value={formData.emergencyName}
-                onChange={handleInputChange}
-                className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs ${
-                  errors.emergencyName && "border-Color-ErrorValidation"
-                }`}
-                placeholder="Emergency Contact Name"
-              />
-              {errors.emergencyName && (
-                <span className="text-Color-ErrorValidation mx-8">
-                  {errors.emergencyName}
-                </span>
-              )}
-            </section>
-
+            <input
+              type="text"
+              id="emergencyName"
+              name="emergencyName"
+              value={formData.emergencyName}
+              onChange={handleInputChange}
+              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-7 ${
+                errors.emergencyName && "border-Color-ErrorValidation mb-0"
+              }`}
+              placeholder="Emergency Contact Name"
+            />
+            {errors.emergencyName && (
+              <span className="text-Color-ErrorValidation mx-8 mb-1">
+                {errors.emergencyName}
+              </span>
+            )}
             {/* INPUT EMERGENCY CONTACT PHONE */}
-            <section className="mb-12">
-              <input
-                type="text"
-                id="emergencyPhone"
-                name="emergencyPhone"
-                value={formData.emergencyPhone}
-                onChange={handleInputChange}
-                className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs ${
-                  errors.emergencyPhone && "border-Color-ErrorValidation"
-                }`}
-                placeholder="Emergency Contact Number"
-              />
-              {errors.emergencyPhone && (
-                <span className="text-Color-ErrorValidation mx-8">
-                  {errors.emergencyPhone}
-                </span>
-              )}
-            </section>
+            <input
+              type="text"
+              id="emergencyPhone"
+              name="emergencyPhone"
+              value={formData.emergencyPhone}
+              onChange={handleInputChange}
+              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-12 ${
+                errors.emergencyPhone && "border-Color-ErrorValidation mb-0"
+              }`}
+              placeholder="Emergency Contact Number"
+            />
+            {errors.emergencyPhone && (
+              <span className="text-Color-ErrorValidation mx-8 mb-12">
+                {errors.emergencyPhone}
+              </span>
+            )}
 
             {/* <Link href={"/"}> */}
             <button
@@ -228,8 +216,7 @@ export default function SignInForm() {
             {/* </Link> */}
           </div>
         </form>
-
-        <div className="">
+        <div className="mt-1">
           <picture>
             <source
               media="(min-width:1007px)"

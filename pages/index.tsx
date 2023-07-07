@@ -1,19 +1,16 @@
-import { useRouter } from "next/router";
 import HomeScreen from "../components/HomeScreen/Home";
+import Navbar from "../components/Navbar/Navbar";
 import PrimeryLayout from "../components/layouts/PrimaryLayout";
 import { NextPageWithLayout } from "../page";
 
 const Home: NextPageWithLayout = () => {
-  const { locale } = useRouter();
+  // const { locale } = useRouter();
 
   return (
     <>
-      <main className="flex flex-col items-center justify-between p-9 text-white bg-bgColor-Home h-screen">
+      <main className="flex flex-col items-center justify-between p-9 text-white bg-bgColor-Home">
         <HomeScreen />
       </main>
-      {/* <div className="bg-bgColor-SignInForm">
-        <SignInForm />
-      </div> */}
     </>
   );
 };
@@ -21,11 +18,10 @@ const Home: NextPageWithLayout = () => {
 export default Home;
 
 Home.getLayout = (page) => {
-  return <PrimeryLayout>{page}</PrimeryLayout>;
+  return (
+    <PrimeryLayout>
+      <Navbar />
+      {page}
+    </PrimeryLayout>
+  );
 };
-
-// Home.getInitialProps = async (ctx: NextPageContext) => {
-//   const res = await fetch("https://api.github.com/repos/vercel/next.js");
-//   const json = await res.json();
-//   return { stars: json.stargazers_count };
-// };
