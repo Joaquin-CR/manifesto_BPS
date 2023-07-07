@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface FormData {
   nombre: string;
@@ -18,76 +18,89 @@ export default function SignInForm() {
     emergencyName: "",
     emergencyPhone: "",
   });
+
+  const [firstChange, setFirstChange] = useState(false);
   const [disable, setDisable] = useState(true);
 
   const validationErrors: Partial<FormData> = {};
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
-  const validateInput = (name: string) => {
-    if (name === formData.nombre) {
-      validationErrors.nombre = "Por favor, ingresa un nombre";
-    }
-    console.log("Valor", formData);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-    validateInput(name);
-    // Validación del campo Nombre
+  const validateInput = () => {
+    // console.log("Valor", formData);
+    //? VALIDATION INPUT NOMBRE
     if (!formData.nombre) {
-      validationErrors.nombre = "Por favor, ingresa un nombre";
+      validationErrors.nombre = "Please, write your name";
     }
 
-    // Validación del campo Teléfono
+    //? VALIDATION INPUT TELEFONO
     if (!formData.telefono) {
-      validationErrors.telefono = "Por favor, ingresa un teléfono";
+      validationErrors.telefono = "Please, write your phone";
     } else if (!/^\d+$/.test(formData.telefono)) {
+      validationErrors.telefono = "Only accept numbers";
+    } else if (formData.telefono.length < 10) {
       validationErrors.telefono = "Must enter 10 digits number";
     }
 
-    // Validación del campo Correo electrónico
+    //? VALIDATION INPUT MAIL
     if (!formData.mail) {
-      validationErrors.mail = "Por favor, ingresa un correo electrónico";
+      validationErrors.mail = "Please, Write your email address";
     } else if (
       !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(formData.mail)
     ) {
       validationErrors.mail = "We do not recognize that as an email. Try again";
     }
 
-    // Validación del campo Emergency Name
+    //? VALIDATION INPUT EMERGENCY NAME
     if (!formData.emergencyName) {
-      validationErrors.emergencyName = "Por favor, ingresa un nombre";
+      validationErrors.emergencyName =
+        "Please, write the name of a emergency contact";
     }
 
-    // Validación del campo Emergency phone
+    //? VALIDATION INPUT EMERGENCY PHONE
     if (!formData.emergencyPhone) {
-      validationErrors.emergencyPhone = "Por favor, ingresa un teléfono";
-    } else if (!/^\d+$/.test(formData.emergencyPhone)) {
       validationErrors.emergencyPhone =
-        "El teléfono debe contener solo números";
+        "Please, write the phone number of your emergency contact";
+    } else if (!/^\d+$/.test(formData.emergencyPhone)) {
+      validationErrors.emergencyPhone = "Only accept numbers";
+    } else if (formData.emergencyPhone.length < 10) {
+      validationErrors.emergencyPhone = "Must enter 10 digits number";
     }
-    console.log("Llegando a la validacion");
+
     if (Object.keys(validationErrors).length > 0) {
-      console.log("Si hay");
       setErrors(validationErrors);
       setDisable(true);
     } else {
+      setErrors({});
       setDisable(false);
-      console.log("No hay");
     }
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFirstChange(true);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    if (!formData) {
+      return; // loading
+    }
+    if (!firstChange) {
+      return;
+    }
+    validateInput();
+  }, [formData]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (Object.keys(validationErrors).length === 0) {
       // Si no hay errores, enviar el formulario
-      console.log("Formulario válido:", formData);
+      console.log("Form valid:", formData);
       // Aquí podrías enviar los datos a una API, realizar acciones, etc.
     } else {
       // Si hay errores, mostrarlos
@@ -119,14 +132,17 @@ export default function SignInForm() {
             {/* mb-9 */}
             {/* INPUT NAME */}
             <input
-              className={`w-4/5 mx-8 mt-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-7 ${
-                errors.nombre && "border-Color-ErrorValidation mb-0"
+              className={`w-4/5 mx-8 mt-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+                errors.nombre
+                  ? "border-Color-ErrorValidation mb-0"
+                  : "mb-7 border-ColorBorder-Inputs"
               }`}
               placeholder="Full Name"
               type="text"
               id="nombre"
               name="nombre"
               value={formData.nombre}
+              required
               onChange={handleInputChange}
             />
             {errors.nombre && (
@@ -136,13 +152,16 @@ export default function SignInForm() {
             )}
             {/* INPUT PHONE  */}
             <input
-              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-7 ${
-                errors.telefono && "border-Color-ErrorValidation mb-0"
+              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+                errors.telefono
+                  ? "border-Color-ErrorValidation mb-0"
+                  : "mb-7 border-ColorBorder-Inputs"
               }`}
               placeholder="Phone Number"
               type="text"
               id="telefono"
               name="telefono"
+              required
               value={formData.telefono}
               onChange={handleInputChange}
             />
@@ -156,10 +175,13 @@ export default function SignInForm() {
               type="email"
               id="mail"
               name="mail"
+              required
               value={formData.mail}
               onChange={handleInputChange}
-              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-7 ${
-                errors.mail && "border-Color-ErrorValidation mb-0"
+              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+                errors.mail
+                  ? "border-Color-ErrorValidation mb-0"
+                  : "mb-7 border-ColorBorder-Inputs"
               }`}
               placeholder="Email"
             />
@@ -173,10 +195,13 @@ export default function SignInForm() {
               type="text"
               id="emergencyName"
               name="emergencyName"
+              required
               value={formData.emergencyName}
               onChange={handleInputChange}
-              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-7 ${
-                errors.emergencyName && "border-Color-ErrorValidation mb-0"
+              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+                errors.emergencyName
+                  ? "border-Color-ErrorValidation mb-0"
+                  : "mb-7 border-ColorBorder-Inputs"
               }`}
               placeholder="Emergency Contact Name"
             />
@@ -190,10 +215,13 @@ export default function SignInForm() {
               type="text"
               id="emergencyPhone"
               name="emergencyPhone"
+              required
               value={formData.emergencyPhone}
               onChange={handleInputChange}
-              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 border-ColorBorder-Inputs mb-12 ${
-                errors.emergencyPhone && "border-Color-ErrorValidation mb-0"
+              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+                errors.emergencyPhone
+                  ? "border-Color-ErrorValidation mb-0"
+                  : "mb-12 border-ColorBorder-Inputs"
               }`}
               placeholder="Emergency Contact Number"
             />
