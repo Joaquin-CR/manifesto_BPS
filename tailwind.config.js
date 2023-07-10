@@ -12,6 +12,7 @@ module.exports = {
         "ColorBorder-Inputs": "#1f1f39",
         "Color-SubmitForm": "#838bc8",
         "Color-ErrorValidation": "#c01313",
+        "Color-Modal-Button": "#6200ee"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
