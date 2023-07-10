@@ -1,8 +1,12 @@
 import Link from "next/link";
-import { Fragment } from "react";
+import { useState } from "react";
 import ListSignIn from "../ListSignIn/ListSignIn";
+import Modal from "../Modal/Modal";
 
 export default function Home() {
+  const [showModal, setShowModal] = useState(false);
+  const [allowActionModal, setallowActionModal] = useState(false);
+
   return (
     <>
       <div className="w-screen">
@@ -22,7 +26,19 @@ export default function Home() {
           />
         </picture>
       </div>
-      <Fragment>{/* <Modal></Modal> */}</Fragment>
+      {showModal && (
+        <Modal
+          onAllowClick={(validate: boolean) => {
+            setallowActionModal(validate);
+            console.log(validate);
+            // EJECUTAR SI ES EDITAR O ELIMINAR
+          }}
+          onCloseClick={(close: boolean) => {
+            setShowModal(close);
+          }}
+          currentId={"Prueba"}
+        />
+      )}
       <ListSignIn></ListSignIn>
       <div className="mb-20">
         <Link href={"signInForm/signIn/"}>
@@ -34,6 +50,9 @@ export default function Home() {
           </button>
         </Link>
       </div>
+      <button className="bg-red-600" onClick={() => setShowModal(true)}>
+        Ver modal
+      </button>
     </>
   );
 }
