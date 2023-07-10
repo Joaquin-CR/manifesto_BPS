@@ -28,6 +28,7 @@ export default function Home() {
       </div>
       {showModal && (
         <Modal
+          modalType="Edit or Delete"
           onAllowClick={(validate: boolean) => {
             setallowActionModal(validate);
             console.log(validate);
