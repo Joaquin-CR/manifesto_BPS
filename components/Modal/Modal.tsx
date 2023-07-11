@@ -1,12 +1,12 @@
 export interface IModal {
-  currentId: string;
+  name: string;
   modalType: string;
   onAllowClick: (allow: boolean) => void;
   onCloseClick: (close: boolean) => void;
 }
 
 const Modal: React.FC<IModal> = ({
-  currentId,
+  name,
   modalType,
   onAllowClick,
   onCloseClick,
@@ -16,7 +16,7 @@ const Modal: React.FC<IModal> = ({
       <div className="w-96">
         <div className="h-28 bg-white p-2 rounded text-black">
           <label htmlFor="">
-            Continue to {modalType} {currentId}
+            Continue to {modalType} {name}
           </label>
           <div className="flex justify-end mx-3 mt-8">
             <button
