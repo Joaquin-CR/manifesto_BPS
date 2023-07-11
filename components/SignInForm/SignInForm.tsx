@@ -1,10 +1,10 @@
-"use client";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+'use client';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 interface FormData {
-  nombre: string;
-  telefono: string;
+  name: string;
+  phoneNumber: string;
   mail: string;
   emergencyName: string;
   emergencyPhone: string;
@@ -12,11 +12,11 @@ interface FormData {
 
 export default function SignInForm() {
   const [formData, setFormData] = useState<FormData>({
-    nombre: "",
-    telefono: "",
-    mail: "",
-    emergencyName: "",
-    emergencyPhone: "",
+    name: '',
+    phoneNumber: '',
+    mail: '',
+    emergencyName: '',
+    emergencyPhone: '',
   });
 
   const [firstChange, setFirstChange] = useState(false);
@@ -28,43 +28,43 @@ export default function SignInForm() {
 
   const validateInput = () => {
     // console.log("Valor", formData);
-    //? VALIDATION INPUT NOMBRE
-    if (!formData.nombre) {
-      validationErrors.nombre = "Please, write your name";
+    //? VALIDATION INPUT NAME
+    if (!formData.name) {
+      validationErrors.name = 'Please, write your name';
     }
 
-    //? VALIDATION INPUT TELEFONO
-    if (!formData.telefono) {
-      validationErrors.telefono = "Please, write your phone";
-    } else if (!/^\d+$/.test(formData.telefono)) {
-      validationErrors.telefono = "Only accept numbers";
-    } else if (formData.telefono.length < 10) {
-      validationErrors.telefono = "Must enter 10 digits number";
+    //? VALIDATION INPUT PHONE NUMBER
+    if (!formData.phoneNumber) {
+      validationErrors.phoneNumber = 'Please, write your phone';
+    } else if (!/^\d+$/.test(formData.phoneNumber)) {
+      validationErrors.phoneNumber = 'Only accept numbers';
+    } else if (formData.phoneNumber.length < 10) {
+      validationErrors.phoneNumber = 'Must enter 10 digits number';
     }
 
     //? VALIDATION INPUT MAIL
     if (!formData.mail) {
-      validationErrors.mail = "Please, Write your email address";
+      validationErrors.mail = 'Please, Write your email address';
     } else if (
       !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(formData.mail)
     ) {
-      validationErrors.mail = "We do not recognize that as an email. Try again";
+      validationErrors.mail = 'We do not recognize that as an email. Try again';
     }
 
     //? VALIDATION INPUT EMERGENCY NAME
     if (!formData.emergencyName) {
       validationErrors.emergencyName =
-        "Please, write the name of a emergency contact";
+        'Please, write the name of a emergency contact';
     }
 
     //? VALIDATION INPUT EMERGENCY PHONE
     if (!formData.emergencyPhone) {
       validationErrors.emergencyPhone =
-        "Please, write the phone number of your emergency contact";
+        'Please, write the phone number of your emergency contact';
     } else if (!/^\d+$/.test(formData.emergencyPhone)) {
-      validationErrors.emergencyPhone = "Only accept numbers";
+      validationErrors.emergencyPhone = 'Only accept numbers';
     } else if (formData.emergencyPhone.length < 10) {
-      validationErrors.emergencyPhone = "Must enter 10 digits number";
+      validationErrors.emergencyPhone = 'Must enter 10 digits number';
     }
 
     if (Object.keys(validationErrors).length > 0) {
@@ -100,7 +100,7 @@ export default function SignInForm() {
 
     if (Object.keys(validationErrors).length === 0) {
       // Si no hay errores, enviar el formulario
-      console.log("Form valid:", formData);
+      console.log('Form valid:', formData);
       // Aquí podrías enviar los datos a una API, realizar acciones, etc.
     } else {
       // Si hay errores, mostrarlos
@@ -112,62 +112,52 @@ export default function SignInForm() {
     <>
       <div className="w-screen bg-bgColor-SignInForm">
         <div className="flex align-middle ml-5 mt-4">
-          <Link href={"/"} className="flex align-middle pt-2">
-            <picture>
-              <source
-                media="(min-width:1007px)"
-                srcSet="/Images/ArrowLeft@3x.webp"
-              />
-              <source
-                media="(min-width:640px)"
-                srcSet="/Images/ArrowLeft@2x.webp"
-              />
-              <img src="/Images/ArrowLeft.webp" alt="<" />
-            </picture>
+          <Link href={'/'} className="flex align-middle pt-2">
+            <img src="/Images/ArrowLeft.webp" alt="<" />
             <label className="text-Color-M&BTN text-xl Montserrat">Back</label>
           </Link>
         </div>
-        <form className="" onSubmit={handleSubmit}>
-          <div className="h-auto mt-4 mx-5 drop-shadow-xl bg-bgColor-Form flex flex-col items-center justify-center">
+        <form className="z-10" onSubmit={handleSubmit}>
+          <div className="mt-4 sm:mx-5 md:m-16 lg:mx-24 drop-shadow-xl bg-bgColor-Form flex flex-col items-center justify-center xl:mx-96">
             {/* mb-9 */}
             {/* INPUT NAME */}
             <input
-              className={`w-4/5 mx-8 mt-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                errors.nombre
-                  ? "border-Color-ErrorValidation mb-0"
-                  : "mb-7 border-ColorBorder-Inputs"
+              className={`w-4/5 mt-8 sm:mx-8 sm:mt-8 lg:mx-14 lg:mt-24 xl:mt-24 xl:mx-14 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+                errors.name
+                  ? 'border-Color-ErrorValidation mb-0'
+                  : 'mb-7 border-ColorBorder-Inputs'
               }`}
               placeholder="Full Name"
               type="text"
-              id="nombre"
-              name="nombre"
-              value={formData.nombre}
+              id="name"
+              name="name"
+              value={formData.name}
               required
               onChange={handleInputChange}
             />
-            {errors.nombre && (
+            {errors.name && (
               <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {errors.nombre}
+                {errors.name}
               </span>
             )}
             {/* INPUT PHONE  */}
             <input
-              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                errors.telefono
-                  ? "border-Color-ErrorValidation mb-0"
-                  : "mb-7 border-ColorBorder-Inputs"
+              className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+                errors.phoneNumber
+                  ? 'border-Color-ErrorValidation mb-0'
+                  : 'mb-7 border-ColorBorder-Inputs'
               }`}
               placeholder="Phone Number"
               type="text"
-              id="telefono"
-              name="telefono"
+              id="phoneNumber"
+              name="phoneNumber"
               required
-              value={formData.telefono}
+              value={formData.phoneNumber}
               onChange={handleInputChange}
             />
-            {errors.telefono && (
+            {errors.phoneNumber && (
               <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {errors.telefono}
+                {errors.phoneNumber}
               </span>
             )}
             {/* INPUT MAIL */}
@@ -178,10 +168,10 @@ export default function SignInForm() {
               required
               value={formData.mail}
               onChange={handleInputChange}
-              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+              className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
                 errors.mail
-                  ? "border-Color-ErrorValidation mb-0"
-                  : "mb-7 border-ColorBorder-Inputs"
+                  ? 'border-Color-ErrorValidation mb-0'
+                  : 'mb-7 border-ColorBorder-Inputs'
               }`}
               placeholder="Email"
             />
@@ -198,10 +188,10 @@ export default function SignInForm() {
               required
               value={formData.emergencyName}
               onChange={handleInputChange}
-              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+              className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
                 errors.emergencyName
-                  ? "border-Color-ErrorValidation mb-0"
-                  : "mb-7 border-ColorBorder-Inputs"
+                  ? 'border-Color-ErrorValidation mb-0'
+                  : 'mb-7 border-ColorBorder-Inputs'
               }`}
               placeholder="Emergency Contact Name"
             />
@@ -218,10 +208,10 @@ export default function SignInForm() {
               required
               value={formData.emergencyPhone}
               onChange={handleInputChange}
-              className={`w-4/5 mx-8 h-11 pl-2 py-2 text-black rounded-md border-solid border-2 ${
+              className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
                 errors.emergencyPhone
-                  ? "border-Color-ErrorValidation mb-0"
-                  : "mb-12 border-ColorBorder-Inputs"
+                  ? 'border-Color-ErrorValidation mb-0'
+                  : 'mb-12 border-ColorBorder-Inputs'
               }`}
               placeholder="Emergency Contact Number"
             />
@@ -236,7 +226,7 @@ export default function SignInForm() {
               disabled={disable}
               type="submit"
               className={`py-3 px-5 mb-12 bg-Color-SubmitForm ${
-                disable && "opacity-70"
+                disable && 'opacity-70'
               }`}
             >
               Save and Sign
@@ -244,11 +234,11 @@ export default function SignInForm() {
             {/* </Link> */}
           </div>
         </form>
-        <div className="mt-1">
+        <div className="mt-1 sticky bottom-0 ">
           <picture>
             <source
               media="(min-width:1007px)"
-              srcSet="/Images/BgImgForm@3x.webp"
+              srcSet="/Images/FullScreenFormImg.webp"
             />
             <source
               media="(min-width:640px)"
