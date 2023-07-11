@@ -6,7 +6,6 @@ import Modal from '../Modal/Modal';
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
-  const [allowActionModal, setallowActionModal] = useState(false);
   const [typeModal, setTypeModal] = useState('');
   const [idSelect, setIdSelect] = useState(-1);
   const [nameSelected, setNameSelected] = useState('');
@@ -67,11 +66,15 @@ export default function Home() {
       {showModal && (
         <Modal
           modalType={typeModal}
-          onAllowClick={(validate: boolean) => {
-            setallowActionModal(validate);
-            console.log(validate);
-            console.log(allowActionModal);
-            // EJECUTAR SI ES EDITAR O ELIMINAR
+          onAllowClick={() => {
+            if (typeModal == 'Edit') {
+              console.log('Se manda a editar el regrstro', idSelect);
+              // SE REDIRIJE A LA PAGINA DE SIGN IN PARA EDITAR EL REGISTRO
+            } else if (typeModal == 'Delete') {
+              console.log('Se manda a eliminar el regrstro', idSelect);
+              // SE MANDA A ELIMINAR EL REGISTRO
+              setShowModal(false);
+            }
           }}
           onCloseClick={(close: boolean) => {
             setShowModal(close);
@@ -120,15 +123,6 @@ export default function Home() {
           </button>
         </Link>
       </div>
-      {/* <button
-        className="bg-red-600"
-        onClick={() => {
-          // console.log(users);
-          setShowModal(true);
-        }}
-      >
-        Ver modal
-      </button> */}
     </>
   );
 }

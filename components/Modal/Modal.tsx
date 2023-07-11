@@ -1,7 +1,7 @@
 export interface IModal {
   name: string;
   modalType: string;
-  onAllowClick: (allow: boolean) => void;
+  onAllowClick: () => void;
   onCloseClick: (close: boolean) => void;
 }
 
@@ -30,7 +30,7 @@ const Modal: React.FC<IModal> = ({
             <button
               className="text-Color-Modal-Button"
               onClick={() => {
-                onAllowClick(true);
+                onAllowClick();
               }}
             >
               ALLOW
