@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import SQLiteDatabase from '../../lib/database';
+import { getAllUsers } from '../../services/getAllUsers';
 import { User } from '../../types';
 import ListSignIn from '../ListSignIn/ListSignIn';
 import Modal from '../Modal/Modal';
@@ -11,10 +13,12 @@ export default function Home() {
   const [nameSelected, setNameSelected] = useState('');
 
   // CONECTION DATABASE
-  // const dbPath = "../database.sqlite";
-  // const db = new SQLiteDatabase(dbPath);
-  // db.createTable();
-  // const users: User[] = getAllUsers(dbPath);
+  const dbPath = '../database.sqlite';
+  const db = new SQLiteDatabase(dbPath);
+  db.createTable();
+  const user = getAllUsers(dbPath);
+  console.log(user);
+
   const users: User[] = [
     {
       id: 0,
@@ -69,10 +73,10 @@ export default function Home() {
           onAllowClick={() => {
             if (typeModal == 'Edit') {
               console.log('Se manda a editar el regrstro', idSelect);
-              // SE REDIRIJE A LA PAGINA DE SIGN IN PARA EDITAR EL REGISTRO
+              // REDIRECT TO SIGINfORM  TO EDIT THE REGISTER
             } else if (typeModal == 'Delete') {
               console.log('Se manda a eliminar el regrstro', idSelect);
-              // SE MANDA A ELIMINAR EL REGISTRO
+              // CALLING DELETE SERVICES
               setShowModal(false);
             }
           }}
