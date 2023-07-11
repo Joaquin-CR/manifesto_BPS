@@ -1,7 +1,7 @@
-import HomeScreen from "../components/HomeScreen/Home";
-import Navbar from "../components/Navbar/Navbar";
-import PrimeryLayout from "../components/layouts/PrimaryLayout";
-import { NextPageWithLayout } from "../page";
+import HomeScreen from '../components/HomeScreen/Home';
+import Navbar from '../components/Navbar/Navbar';
+import PrimeryLayout from '../components/layouts/PrimaryLayout';
+import { NextPageWithLayout } from '../page';
 
 const Home: NextPageWithLayout = () => {
   // const { locale } = useRouter();

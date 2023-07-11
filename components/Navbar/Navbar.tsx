@@ -1,6 +1,6 @@
-"use client";
-import { useState } from "react";
-import styles from "./Navbar.module.css";
+'use client';
+import { useState } from 'react';
+import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [effect, setEffect] = useState(false);
@@ -24,7 +24,7 @@ export default function Navbar() {
         </button>
       </div>
       <div className="grid place-items-center lg:ml-32 lg:place-items-start xl:place-items-start xl:ml-32">
-        <div className="font-Modern mb-2 text-center text-Color-M&BTN text-4xl w-8 h-8">
+        <div className="font-Modern mt-2 mb-2 text-center text-Color-M&BTN text-4xl w-8 h-8 xl:px-3 lg:px-3">
           M
         </div>
         <span
