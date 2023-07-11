@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import SQLiteDatabase from '../../lib/database';
-import { getAllUsers } from '../../services/getAllUsers';
 import { User } from '../../types';
 import ListSignIn from '../ListSignIn/ListSignIn';
 import Modal from '../Modal/Modal';
@@ -13,11 +11,12 @@ export default function Home() {
   const [nameSelected, setNameSelected] = useState('');
 
   // CONECTION DATABASE
-  const dbPath = '../database.sqlite';
-  const db = new SQLiteDatabase(dbPath);
-  db.createTable();
-  const user = getAllUsers(dbPath);
-  console.log(user);
+  // THIS PART CAUSE THE ERROR
+  // const dbPath = '../database.sqlite';
+  // const db = new SQLiteDatabase(dbPath);
+  // db.createTable();
+  // const user = getAllUsers(dbPath);
+  // console.log(user);
 
   const users: User[] = [
     {
