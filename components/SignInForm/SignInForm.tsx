@@ -30,6 +30,7 @@ export default function SignInForm() {
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const validateInput = () => {
+    console.log('Entrando a la validacion');
     //? VALIDATION INPUT NAME
     if (!formData.name) {
       validationErrors.name = 'Please, write your name';
@@ -118,6 +119,7 @@ export default function SignInForm() {
       if (btnTitle === 'Update') {
         //Se actualiza la info
         console.log('Actualizando info');
+        console.log(formData);
       } else {
         const dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
 
@@ -135,7 +137,6 @@ export default function SignInForm() {
       }
       // Aquí podrías enviar los datos a una API, realizar acciones, etc.
     } else {
-      // Si hay errores, mostrarlos
       setErrors(validationErrors);
     }
   };
@@ -263,7 +264,7 @@ export default function SignInForm() {
             <button
               disabled={disable}
               type="submit"
-              className={`py-3 px-5 mb-12 bg-Color-SubmitForm ${
+              className={`py-3 px-5 mb-12 bg-Color-SubmitForm text-white ${
                 disable && 'opacity-70'
               }`}
             >
@@ -271,8 +272,8 @@ export default function SignInForm() {
             </button>
           </div>
         </form>
-        <div className="mt-1 sticky bottom-0 ">
-          <picture>
+        <div className="mt-1">
+          <picture className="sticky bottom-0 ">
             <source
               media="(min-width:1007px)"
               srcSet="/Images/FullScreenFormImg.webp"
