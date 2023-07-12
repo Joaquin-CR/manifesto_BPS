@@ -129,6 +129,7 @@ export default function SignInForm() {
           }
         }
         localStorage.setItem('JSONList', JSON.stringify(dataList));
+        localStorage.removeItem('Edit Id');
         window.location.href = '/';
       } else {
         const maxId = dataList.reduce((max: any, item: any) => {
