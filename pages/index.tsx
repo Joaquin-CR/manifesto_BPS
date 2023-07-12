@@ -8,9 +8,11 @@ const Home: NextPageWithLayout = () => {
 
   return (
     <>
-      <main className="flex flex-col items-center justify-between p-9 text-white bg-bgColor-Home">
-        <HomeScreen />
-      </main>
+      <div className="flex flex-col items-center min-h-screen bg-bgColor-Home">
+        <main className="flex flex-col items-center justify-between p-9 text-white flex-grow">
+          <HomeScreen />
+        </main>
+      </div>
     </>
   );
 };

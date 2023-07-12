@@ -55,20 +55,20 @@ export default function Home() {
 
   return (
     <>
-      <div className="w-max">
+      <div className="w-full max-w-screen-lg mx-auto">
         <picture>
           <source
-            media="(min-width:1008px)"
-            srcSet="/Images/BgImgHome@3x.webp"
+            media="(min-width: 640px)"
+            srcSet="/Images/BgImgHome@2x.webp"
           />
           <source
-            media="(min-width:640px)"
-            srcSet="/Images/BgImgHome@2x.webp"
+            media="(min-width: 1008px)"
+            srcSet="/Images/BgImgHome@3x.webp"
           />
           <img
             src="/Images/BgImgHome.webp"
             alt="Manifesto"
-            className="w-screen"
+            className="w-full"
           />
         </picture>
       </div>
@@ -77,11 +77,9 @@ export default function Home() {
           modalType={typeModal}
           onAllowClick={() => {
             if (typeModal == 'Edit') {
-              console.log('Se manda a editar el regrstro', idSelect);
               // REDIRECT TO SIGINfORM  TO EDIT THE REGISTER
               edit(idSelect);
             } else if (typeModal == 'Delete') {
-              console.log('Se manda a eliminar el regrstro', idSelect);
               // CALLING DELETE SERVICES
               remove(idSelect);
               updateList(usersList);
@@ -95,42 +93,43 @@ export default function Home() {
         />
       )}
       {content ? (
-        <div className="my-44 pb-3 pt-4 w-80 text-center text-xl font-medium">
+        <div className="my-8 md:my-24 text-center text-xl font-medium">
           <div>No one is currently signed in. Be the fist to sign in.</div>
         </div>
       ) : (
-        <div className="my-24 w-80 text-center text-xl font-medium">
-          <div className="mb-7">
-            <p className="font-MonserraM font-medium text-xl">
-              Sign in at the registry.
-            </p>
-          </div>
+        <div className="mb-8 w-full max-w-screen-lg mx-auto md:mb-12 text-center text-xl font-medium">
+          {/* <div className="mb-7"> */}
+          <p className="font-MonserraM font-medium text-xl mb-7">
+            Sign in at the registry.
+          </p>
+          {/* </div> */}
           {usersList.map((user: any) => (
             <>
-              <ListSignIn
-                users={user}
-                onEditDeleteClick={(
-                  open: boolean,
-                  id: number,
-                  name: string,
-                  type: string
-                ) => {
-                  setShowModal(open);
-                  setIdSelect(id);
-                  setTypeModal(type);
-                  setNameSelected(name);
-                }}
-              ></ListSignIn>
+              <div className="flex justify-center">
+                <div className="w-full md:w-500px">
+                  <ListSignIn
+                    users={user}
+                    onEditDeleteClick={(
+                      open: boolean,
+                      id: number,
+                      name: string,
+                      type: string
+                    ) => {
+                      setShowModal(open);
+                      setIdSelect(id);
+                      setTypeModal(type);
+                      setNameSelected(name);
+                    }}
+                  ></ListSignIn>
+                </div>
+              </div>
             </>
           ))}
         </div>
       )}
       <div className={usersList && 'mb-20'}>
         <Link href={'signInForm/signIn/'}>
-          <button
-            className="w-44 h-14 flex-grow-0 py-3 px-8
-         bg-Color-M&BTN text-black font-Inter"
-          >
+          <button className="w-full md:w-44 h-14 py-3 px-8 bg-Color-M&BTN text-black font-Inter">
             Sign In
           </button>
         </Link>
