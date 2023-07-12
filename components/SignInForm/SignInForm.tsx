@@ -87,22 +87,21 @@ export default function SignInForm() {
       [name]: value,
     }));
   };
-
   useEffect(() => {
     const edit = localStorage.getItem('Edit Id');
-    console.log('Editar', edit);
-    // I CAN GET AND SHOW IT BUT I CAN'T MANIPULATED THE INFO INTO DE INPUTS
-    // if (edit) {
-    //   setButtonTitle('Update');
-    //   const dataList = JSON.parse(localStorage?.getItem('JSONList'));
-    //   console.log('Datos', dataList);
-    //   for (let i = 0; i < dataList.length; i++) {
-    //     if (dataList[i].id == edit) {
-    //       console.log('Elemento a editar', dataList[i]);
-    //       setFormData(dataList[i]);
-    //     }
-    //   }
-    // }
+    if (edit) {
+      setButtonTitle('Update');
+      const dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
+      for (let i = 0; i < dataList.length; i++) {
+        if (dataList[i].id == edit) {
+          setFormData(dataList[i]);
+          break;
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     if (!formData) {
       return; // loading
     }
@@ -119,16 +118,13 @@ export default function SignInForm() {
       let dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
       if (btnTitle === 'Update') {
         const id = localStorage.getItem('Edit Id');
-        //Se actualiza la info
-        console.log('Actualizando info');
-        console.log(formData);
         for (let i = 0; i < dataList.length; i++) {
-          if (dataList[i].id === id) {
-            dataList.name = formData.name;
-            dataList.phoneNumber = formData.phoneNumber;
-            dataList.mail = formData.mail;
-            dataList.emergencyName = formData.emergencyName;
-            dataList.emergencyPhone = formData.emergencyPhone;
+          if (dataList[i].id == id) {
+            dataList[i].name = formData.name;
+            dataList[i].phoneNumber = formData.phoneNumber;
+            dataList[i].mail = formData.mail;
+            dataList[i].emergencyName = formData.emergencyName;
+            dataList[i].emergencyPhone = formData.emergencyPhone;
             break;
           }
         }
