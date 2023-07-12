@@ -119,7 +119,8 @@ export default function SignInForm() {
         //Se actualiza la info
         console.log('Actualizando info');
       } else {
-        const dataList = JSON.parse(localStorage.getItem('JSONList'));
+        const dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
+
         const maxId = dataList.reduce((max: any, item: any) => {
           if (item.id > max) {
             return item.id;
