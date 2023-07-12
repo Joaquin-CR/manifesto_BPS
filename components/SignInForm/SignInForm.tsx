@@ -91,12 +91,7 @@ export default function SignInForm() {
   useEffect(() => {
     const edit = localStorage.getItem('Edit Id');
     console.log('Editar', edit);
-    if (!formData) {
-      return; // loading
-    }
-    if (!firstChange) {
-      return;
-    }
+    // I CAN GET AND SHOW IT BUT I CAN'T MANIPULATED THE INFO INTO DE INPUTS
     // if (edit) {
     //   setButtonTitle('Update');
     //   const dataList = JSON.parse(localStorage?.getItem('JSONList'));
@@ -108,6 +103,12 @@ export default function SignInForm() {
     //     }
     //   }
     // }
+    if (!formData) {
+      return; // loading
+    }
+    if (!firstChange) {
+      return;
+    }
     validateInput();
   }, [formData]);
 
@@ -115,14 +116,25 @@ export default function SignInForm() {
     e.preventDefault();
 
     if (Object.keys(validationErrors).length === 0) {
-      // Si no hay errores, enviar el formulario
+      let dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
       if (btnTitle === 'Update') {
+        const id = localStorage.getItem('Edit Id');
         //Se actualiza la info
         console.log('Actualizando info');
         console.log(formData);
+        for (let i = 0; i < dataList.length; i++) {
+          if (dataList[i].id === id) {
+            dataList.name = formData.name;
+            dataList.phoneNumber = formData.phoneNumber;
+            dataList.mail = formData.mail;
+            dataList.emergencyName = formData.emergencyName;
+            dataList.emergencyPhone = formData.emergencyPhone;
+            break;
+          }
+        }
+        localStorage.setItem('JSONList', JSON.stringify(dataList));
+        window.location.href = '/';
       } else {
-        const dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
-
         const maxId = dataList.reduce((max: any, item: any) => {
           if (item.id > max) {
             return item.id;
@@ -135,7 +147,6 @@ export default function SignInForm() {
         localStorage.setItem('JSONList', JSON.stringify(dataList));
         window.location.href = '/';
       }
-      // Aquí podrías enviar los datos a una API, realizar acciones, etc.
     } else {
       setErrors(validationErrors);
     }
