@@ -48,6 +48,11 @@ export default function Home() {
     setUsersList(usersList);
   };
 
+  const edit = (id: number) => {
+    localStorage.setItem('Edit Id', id.toString());
+    window.location.href = 'signInForm/signIn/';
+  };
+
   return (
     <>
       <div className="w-max">
@@ -74,6 +79,7 @@ export default function Home() {
             if (typeModal == 'Edit') {
               console.log('Se manda a editar el regrstro', idSelect);
               // REDIRECT TO SIGINfORM  TO EDIT THE REGISTER
+              edit(idSelect);
             } else if (typeModal == 'Delete') {
               console.log('Se manda a eliminar el regrstro', idSelect);
               // CALLING DELETE SERVICES

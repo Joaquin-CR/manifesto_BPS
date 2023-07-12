@@ -10,9 +10,6 @@ export interface IListSinIn {
   ) => void;
 }
 const ListSignIn: React.FC<IListSinIn> = ({ onEditDeleteClick, users }) => {
-  // console.log('Datos', users);
-  // const data: User = users.users;
-
   return (
     <>
       <div className="flex justify-between mb-3" id={users.id}>
@@ -25,7 +22,6 @@ const ListSignIn: React.FC<IListSinIn> = ({ onEditDeleteClick, users }) => {
             onClick={() => {
               onEditDeleteClick(true, users.id, users.name, 'Edit');
             }}
-            // {editBTN(user.id, user.name)}
           >
             <picture>
               <source

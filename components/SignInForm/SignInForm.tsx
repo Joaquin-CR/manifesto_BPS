@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 interface FormData {
+  id: number;
   name: string;
   phoneNumber: string;
   mail: string;
@@ -12,6 +13,7 @@ interface FormData {
 
 export default function SignInForm() {
   const [formData, setFormData] = useState<FormData>({
+    id: -1,
     name: '',
     phoneNumber: '',
     mail: '',
@@ -19,6 +21,7 @@ export default function SignInForm() {
     emergencyPhone: '',
   });
 
+  const [btnTitle, setButtonTitle] = useState('Save and Sign');
   const [firstChange, setFirstChange] = useState(false);
   const [disable, setDisable] = useState(true);
 
@@ -27,7 +30,6 @@ export default function SignInForm() {
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
   const validateInput = () => {
-    // console.log("Valor", formData);
     //? VALIDATION INPUT NAME
     if (!formData.name) {
       validationErrors.name = 'Please, write your name';
@@ -86,12 +88,25 @@ export default function SignInForm() {
   };
 
   useEffect(() => {
+    const edit = localStorage.getItem('Edit Id');
+    console.log('Editar', edit);
     if (!formData) {
       return; // loading
     }
     if (!firstChange) {
       return;
     }
+    // if (edit) {
+    //   setButtonTitle('Update');
+    //   const dataList = JSON.parse(localStorage?.getItem('JSONList'));
+    //   console.log('Datos', dataList);
+    //   for (let i = 0; i < dataList.length; i++) {
+    //     if (dataList[i].id == edit) {
+    //       console.log('Elemento a editar', dataList[i]);
+    //       setFormData(dataList[i]);
+    //     }
+    //   }
+    // }
     validateInput();
   }, [formData]);
 
@@ -100,7 +115,23 @@ export default function SignInForm() {
 
     if (Object.keys(validationErrors).length === 0) {
       // Si no hay errores, enviar el formulario
-      console.log('Form valid:', formData);
+      if (btnTitle === 'Update') {
+        //Se actualiza la info
+        console.log('Actualizando info');
+      } else {
+        const dataList = JSON.parse(localStorage.getItem('JSONList'));
+        const maxId = dataList.reduce((max: any, item: any) => {
+          if (item.id > max) {
+            return item.id;
+          } else {
+            return max;
+          }
+        }, -1);
+        formData.id = maxId + 1;
+        dataList.push(formData);
+        localStorage.setItem('JSONList', JSON.stringify(dataList));
+        window.location.href = '/';
+      }
       // Aquí podrías enviar los datos a una API, realizar acciones, etc.
     } else {
       // Si hay errores, mostrarlos
@@ -108,11 +139,19 @@ export default function SignInForm() {
     }
   };
 
+  const goBackHome = () => {
+    localStorage.removeItem('Edit Id');
+  };
+
   const content = (
     <>
       <div className="w-screen bg-bgColor-SignInForm">
         <div className="flex align-middle ml-5 mt-4">
-          <Link href={'/'} className="flex align-middle pt-2">
+          <Link
+            href={'/'}
+            className="flex align-middle pt-2"
+            onClick={goBackHome}
+          >
             <img src="/Images/ArrowLeft.webp" alt="<" />
             <label className="text-Color-M&BTN text-xl Montserrat">Back</label>
           </Link>
@@ -220,8 +259,6 @@ export default function SignInForm() {
                 {errors.emergencyPhone}
               </span>
             )}
-
-            {/* <Link href={"/"}> */}
             <button
               disabled={disable}
               type="submit"
@@ -229,9 +266,8 @@ export default function SignInForm() {
                 disable && 'opacity-70'
               }`}
             >
-              Save and Sign
+              {btnTitle}
             </button>
-            {/* </Link> */}
           </div>
         </form>
         <div className="mt-1 sticky bottom-0 ">
