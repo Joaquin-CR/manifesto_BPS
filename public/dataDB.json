@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "name": "Joaquin",
+    "phoneNumber": "1234567890",
+    "mail": "joaquin@gmail.com",
+    "emergencyName": "Pablo",
+    "emergencyPhone": "0987654321"
+  },
+  {
+    "id": 1,
+    "name": "Alvaro",
+    "phoneNumber": "1234567890",
+    "mail": "Alvaro@gmail.com",
+    "emergencyName": "Devora",
+    "emergencyPhone": "0987654321"
+  },
+  {
+    "id": 2,
+    "name": "Karime",
+    "phoneNumber": "1234567890",
+    "mail": "karime@gmail.com",
+    "emergencyName": "Joaquin",
+    "emergencyPhone": "0987654321"
+  }
+]

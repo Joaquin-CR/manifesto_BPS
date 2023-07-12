@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import dataList from '../../public/dataDB.json';
 import { User } from '../../types';
 import ListSignIn from '../ListSignIn/ListSignIn';
 import Modal from '../Modal/Modal';
@@ -9,6 +10,7 @@ export default function Home() {
   const [typeModal, setTypeModal] = useState('');
   const [idSelect, setIdSelect] = useState(-1);
   const [nameSelected, setNameSelected] = useState('');
+  const [usersList, setUsersList] = useState<User[]>([]);
 
   // CONECTION DATABASE
   // THIS PART CAUSE THE ERROR
@@ -18,34 +20,33 @@ export default function Home() {
   // const user = getAllUsers(dbPath);
   // console.log(user);
 
-  const users: User[] = [
-    {
-      id: 0,
-      name: 'Joaquin',
-      phoneNumber: '1234567890',
-      mail: 'joaquin@gmail.com',
-      emergencyName: 'Pablo',
-      emergencyPhone: '0987654321',
-    },
-    {
-      id: 1,
-      name: 'Alvaro',
-      phoneNumber: '1234567890',
-      mail: 'Alvaro@gmail.com',
-      emergencyName: 'Devora',
-      emergencyPhone: '0987654321',
-    },
-    {
-      id: 2,
-      name: 'Karime',
-      phoneNumber: '1234567890',
-      mail: 'karime@gmail.com',
-      emergencyName: 'Joaquin',
-      emergencyPhone: '0987654321',
-    },
-  ];
+  useEffect(() => {
+    setUsersList(dataList);
+    const storeData = localStorage.getItem('JSONList');
+    if (storeData) {
+      setUsersList(JSON.parse(storeData));
+    } else {
+      localStorage.setItem('JSONList', JSON.stringify(dataList));
+    }
+  }, []);
 
-  const content = users.length == 0;
+  const updateList = (updateItem: any) => {
+    setUsersList(updateItem);
+    localStorage.setItem('JSONList', JSON.stringify(updateItem));
+  };
+
+  const content = usersList.length == 0;
+
+  const remove = (id: number) => {
+    let dataList = usersList;
+    for (let i = 0; i < dataList.length; i++) {
+      if (dataList[i].id === id) {
+        dataList.splice(i, 1);
+        i--;
+      }
+    }
+    setUsersList(usersList);
+  };
 
   return (
     <>
@@ -76,6 +77,8 @@ export default function Home() {
             } else if (typeModal == 'Delete') {
               console.log('Se manda a eliminar el regrstro', idSelect);
               // CALLING DELETE SERVICES
+              remove(idSelect);
+              updateList(usersList);
               setShowModal(false);
             }
           }}
@@ -96,7 +99,7 @@ export default function Home() {
               Sign in at the registry.
             </p>
           </div>
-          {users.map((user: any) => (
+          {usersList.map((user: any) => (
             <>
               <ListSignIn
                 users={user}
@@ -116,7 +119,7 @@ export default function Home() {
           ))}
         </div>
       )}
-      <div className={users && 'mb-20'}>
+      <div className={usersList && 'mb-20'}>
         <Link href={'signInForm/signIn/'}>
           <button
             className="w-44 h-14 flex-grow-0 py-3 px-8
