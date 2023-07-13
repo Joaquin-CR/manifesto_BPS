@@ -4,11 +4,9 @@ import PrimeryLayout from '../components/layouts/PrimaryLayout';
 import { NextPageWithLayout } from '../page';
 
 const Home: NextPageWithLayout = () => {
-  // const { locale } = useRouter();
-
   return (
     <>
-      <div className="flex flex-col items-center min-h-screen bg-bgColor-Home">
+      <div className="flex flex-col items-center w-full min-h-screen bg-bgColor-Home">
         <main className="flex flex-col items-center justify-between p-9 text-white flex-grow">
           <HomeScreen />
         </main>

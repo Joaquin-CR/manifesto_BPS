@@ -8,10 +8,9 @@ export default function Navbar() {
 
   const content = (
     <div
-      className={`${styles.navbarComponent} w-screen bg-bgColor-Navbar h-24`}
+      className={`${styles.navbarComponent} w-full bg-bgColor-Navbar h-24 shadow-black shadow-lg`}
     >
       <div className="pl-8">
-        {/*ANIMACION ${effect && styles.toggle-btn} */}
         <button
           id="hamburger-button"
           className={`text-3xl cursor-pointer`}

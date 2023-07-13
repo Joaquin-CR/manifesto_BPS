@@ -5,7 +5,7 @@ import { NextPageWithLayout } from '../../page';
 
 const singInFormLayout: NextPageWithLayout = () => {
   return (
-    <div className="bg-bgColor-SignInForm min-h-screen flex justify-center">
+    <div className="bg-bgColor-SignInForm min-h-screen w-full flex justify-center overflow-y-hidden">
       <SignInForm />
     </div>
   );
