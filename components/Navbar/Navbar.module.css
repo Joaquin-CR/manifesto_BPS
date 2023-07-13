@@ -1,11 +1,9 @@
-
-
-.navbarComponent {    
-    box-shadow: 0 3px 27px 0 rgba(0, 0, 0, 0.3);
+.navbarComponent {
+  box-shadow: 0 3px 27px 0 rgba(0, 0, 0, 0.3);
 }
 
 .manifestoName {
-    font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* .toggle-btn {

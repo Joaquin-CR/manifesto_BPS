@@ -1,6 +1,6 @@
-"use client";
-import { useState } from "react";
-import styles from "./Navbar.module.css";
+'use client';
+import { useState } from 'react';
+import styles from './Navbar.module.css';
 
 export default function Navbar() {
   const [effect, setEffect] = useState(false);
@@ -8,10 +8,9 @@ export default function Navbar() {
 
   const content = (
     <div
-      className={`${styles.navbarComponent} w-screen bg-bgColor-Navbar h-24`}
+      className={`${styles.navbarComponent} w-full bg-bgColor-Navbar h-24 shadow-black shadow-lg`}
     >
       <div className="pl-8">
-        {/*ANIMACION ${effect && styles.toggle-btn} */}
         <button
           id="hamburger-button"
           className={`text-3xl cursor-pointer`}
@@ -24,7 +23,7 @@ export default function Navbar() {
         </button>
       </div>
       <div className="grid place-items-center lg:ml-32 lg:place-items-start xl:place-items-start xl:ml-32">
-        <div className="font-Modern mb-2 text-center text-Color-M&BTN text-4xl w-8 h-8">
+        <div className="font-Modern mt-2 mb-2 text-center text-Color-M&BTN text-4xl w-8 h-8 xl:px-3 lg:px-3">
           M
         </div>
         <span

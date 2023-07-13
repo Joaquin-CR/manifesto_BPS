@@ -2,11 +2,17 @@
   "name": "manifesto",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=14.0.0",
+    "yarn": ">=1.22.0",
+    "npm": "please-use-yarn"
+  },
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "prettier": "prettier --write .",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -22,7 +28,9 @@
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "sqlite3": "^5.1.6",
     "tailwindcss": "^3.3.2",
+    "ts-jackson": "^1.5.0",
     "typescript": "5.1.6",
     "yarn": "^1.22.19"
   },
@@ -44,5 +52,10 @@
   },
   "resolutions": {
     "webpack": "^5"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }
