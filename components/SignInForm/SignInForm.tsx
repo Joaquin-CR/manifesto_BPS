@@ -155,7 +155,7 @@ export default function SignInForm() {
 
   const content = (
     <>
-      <div className="w-screen bg-bgColor-SignInForm">
+      <div className="relative w-screen bg-bgColor-SignInForm h-full max-h-screen">
         <div className="flex align-middle ml-5 mt-4">
           <Link
             href={'/'}
@@ -166,9 +166,8 @@ export default function SignInForm() {
             <label className="text-Color-M&BTN text-xl Montserrat">Back</label>
           </Link>
         </div>
-        <form className="z-10" onSubmit={handleSubmit}>
+        <form className="z-10 md:relative" onSubmit={handleSubmit}>
           <div className="mt-4 sm:mx-5 md:m-16 lg:mx-24 drop-shadow-xl bg-bgColor-Form flex flex-col items-center justify-center xl:mx-96">
-            {/* mb-9 */}
             {/* INPUT NAME */}
             <input
               className={`w-4/5 mt-8 sm:mx-8 sm:mt-8 lg:mx-14 lg:mt-24 xl:mt-24 xl:mx-14 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
@@ -280,8 +279,8 @@ export default function SignInForm() {
             </button>
           </div>
         </form>
-        <div className="mt-1">
-          <picture className="sticky bottom-0 ">
+        <div className="lg:absolute bottom-0 md:z-0">
+          <picture>
             <source
               media="(min-width:1007px)"
               srcSet="/Images/FullScreenFormImg.webp"
