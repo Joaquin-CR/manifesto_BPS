@@ -1,24 +1,13 @@
 'use client';
-import { useState } from 'react';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
-  const [effect, setEffect] = useState(false);
-  const [show, setShow] = useState(false);
-
   const content = (
     <div
       className={`${styles.navbarComponent} w-full bg-bgColor-Navbar h-24 shadow-black shadow-lg`}
     >
       <div className="pl-8">
-        <button
-          id="hamburger-button"
-          className={`text-3xl cursor-pointer`}
-          onClick={() => {
-            setEffect(effect ? false : true);
-            setShow(show ? false : true);
-          }}
-        >
+        <button id="hamburger-button" className={`text-3xl cursor-pointer`}>
           <div className="bg-white w-8 h-1 rounded absolute top-14 -mt-0.5 transition-all duration-500 before:contect-[''] before:bg-white before:w-8 before:h-1 before:rounded before:absolute before:-translate-x-4 before:-translate-y-3 before:transition-all before:duration-500 after:contect-[''] after:bg-white after:w-8 after:h-1 after:rounded after:absolute after:-translate-x-4 after:translate-y-3 after:transition-all after:duration-500"></div>
         </button>
       </div>

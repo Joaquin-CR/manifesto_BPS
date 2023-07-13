@@ -55,7 +55,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="w-full max-w-screen-lg mx-auto">
+      <div className="w-full mx-auto">
         <picture>
           <source
             media="(min-width: 640px)"
