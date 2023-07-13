@@ -279,23 +279,19 @@ export default function SignInForm() {
             </button>
           </div>
         </form>
-        <div className="lg:absolute bottom-0 md:z-0">
-          <picture>
-            <source
-              media="(min-width:1007px)"
-              srcSet="/Images/FullScreenFormImg.webp"
-            />
-            <source
-              media="(min-width:640px)"
-              srcSet="/Images/BgImgForm@2x.webp"
-            />
-            <img
-              src="/Images/BgImgForm.webp"
-              alt="Image"
-              className="w-screen"
-            />
-          </picture>
-        </div>
+      </div>
+      <div className="absolute inset-x-0 bottom-0">
+        <picture>
+          <source
+            media="(min-width:1007px)"
+            srcSet="/Images/FullScreenFormImg.webp"
+          />
+          <source
+            media="(min-width:640px)"
+            srcSet="/Images/BgImgForm@2x.webp"
+          />
+          <img src="/Images/BgImgForm.webp" alt="Image" className="w-screen" />
+        </picture>
       </div>
     </>
   );
