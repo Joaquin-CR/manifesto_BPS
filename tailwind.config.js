@@ -16,11 +16,6 @@ module.exports = {
         'Color-Modal-Button': '#6200ee',
         'Color-hr': '#979797',
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
       keyframes: {
         'open-menu': {
           '0%': { transform: 'scaleY(0)' },
@@ -36,6 +31,9 @@ module.exports = {
         Inter: ['InterMedium'],
         MonserraM: ['MonserratMedium'],
         MonserratR: ['MonserratRegular'],
+      },
+      backgroundImage: {
+        manifestoWeb: "url('/Images/ImgWeb.svg')",
       },
     },
   },

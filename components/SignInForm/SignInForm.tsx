@@ -24,57 +24,76 @@ export default function SignInForm() {
   const [btnTitle, setButtonTitle] = useState('Save and Sign');
   const [firstChange, setFirstChange] = useState(false);
   const [disable, setDisable] = useState(true);
+  const [nameError, setNameError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [emergencyNameError, setEmergencyNameError] = useState('');
+  const [emergencyPhoneError, setEmergencyPhoneError] = useState('');
 
-  const validationErrors: Partial<FormData> = {};
-
-  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const handleNameBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (
+      !/^[a-z ,.'-]+$/i.test(e.target.value) ||
+      e.target.value.length <= 2 ||
+      !/^[a-z ,.'-]+$/i.test(e.target.value) ||
+      e.target.value.length > 12
+    ) {
+      setNameError(
+        'Must be 2-12 characters long and have no special characters.'
+      );
+    } else {
+      setNameError('');
+    }
+  };
+  const handlePhoneBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!/^[0-9]+$/.test(e.target.value)) {
+      setPhoneError('Phone should only contain digits');
+    } else if (e.target.value.length !== 10) {
+      setPhoneError('Must enter 10 digit number.');
+    } else {
+      setPhoneError('');
+    }
+  };
+  const handleEmailBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(e.target.value)) {
+      setEmailError('Email is invalid');
+    } else {
+      setEmailError('');
+    }
+  };
+  const handleEmergenyNameBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (
+      !/^[a-z ,.'-]+$/i.test(e.target.value) ||
+      e.target.value.length < 2 ||
+      !/^[a-z ,.'-]+$/i.test(e.target.value) ||
+      e.target.value.length > 12
+    ) {
+      setEmergencyNameError(
+        'Must be 2-12 characters long and have no special characters.'
+      );
+    } else {
+      setEmergencyNameError('');
+    }
+  };
+  const handleEmergencyPhoneBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!/^[0-9]+$/.test(e.target.value)) {
+      setEmergencyPhoneError('should only contain digits');
+    } else if (e.target.value.length !== 10) {
+      setEmergencyPhoneError('Must enter 10 digit number.');
+    } else {
+      setEmergencyPhoneError('');
+    }
+  };
 
   const validateInput = () => {
-    console.log('Entrando a la validacion');
-    //? VALIDATION INPUT NAME
-    if (!formData.name) {
-      validationErrors.name = 'Please, write your name';
-    }
-
-    //? VALIDATION INPUT PHONE NUMBER
-    if (!formData.phoneNumber) {
-      validationErrors.phoneNumber = 'Please, write your phone';
-    } else if (!/^\d+$/.test(formData.phoneNumber)) {
-      validationErrors.phoneNumber = 'Only accept numbers';
-    } else if (formData.phoneNumber.length < 10) {
-      validationErrors.phoneNumber = 'Must enter 10 digits number';
-    }
-
-    //? VALIDATION INPUT MAIL
-    if (!formData.mail) {
-      validationErrors.mail = 'Please, Write your email address';
-    } else if (
-      !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(formData.mail)
+    if (
+      nameError &&
+      phoneError &&
+      emailError &&
+      emergencyNameError &&
+      emergencyPhoneError
     ) {
-      validationErrors.mail = 'We do not recognize that as an email. Try again';
-    }
-
-    //? VALIDATION INPUT EMERGENCY NAME
-    if (!formData.emergencyName) {
-      validationErrors.emergencyName =
-        'Please, write the name of a emergency contact';
-    }
-
-    //? VALIDATION INPUT EMERGENCY PHONE
-    if (!formData.emergencyPhone) {
-      validationErrors.emergencyPhone =
-        'Please, write the phone number of your emergency contact';
-    } else if (!/^\d+$/.test(formData.emergencyPhone)) {
-      validationErrors.emergencyPhone = 'Only accept numbers';
-    } else if (formData.emergencyPhone.length < 10) {
-      validationErrors.emergencyPhone = 'Must enter 10 digits number';
-    }
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
       setDisable(true);
     } else {
-      setErrors({});
       setDisable(false);
     }
   };
@@ -86,7 +105,26 @@ export default function SignInForm() {
       ...prevFormData,
       [name]: value,
     }));
+    switch (name) {
+      case 'name':
+        console.log('entando');
+        handleNameBlur(e);
+        break;
+      case 'phoneNumber':
+        handlePhoneBlur(e);
+        break;
+      case 'mail':
+        handleEmailBlur(e);
+        break;
+      case 'emergencyName':
+        handleEmergenyNameBlur(e);
+        break;
+      case 'emergencyPhone':
+        handleEmergencyPhoneBlur(e);
+        break;
+    }
   };
+
   useEffect(() => {
     const edit = localStorage.getItem('Edit Id');
     if (edit) {
@@ -113,39 +151,34 @@ export default function SignInForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (Object.keys(validationErrors).length === 0) {
-      let dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
-      if (btnTitle === 'Update') {
-        const id = localStorage.getItem('Edit Id');
-        for (let i = 0; i < dataList.length; i++) {
-          if (dataList[i].id == id) {
-            dataList[i].name = formData.name;
-            dataList[i].phoneNumber = formData.phoneNumber;
-            dataList[i].mail = formData.mail;
-            dataList[i].emergencyName = formData.emergencyName;
-            dataList[i].emergencyPhone = formData.emergencyPhone;
-            break;
-          }
+    let dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
+    if (btnTitle === 'Update') {
+      const id = localStorage.getItem('Edit Id');
+      for (let i = 0; i < dataList.length; i++) {
+        if (dataList[i].id == id) {
+          dataList[i].name = formData.name;
+          dataList[i].phoneNumber = formData.phoneNumber;
+          dataList[i].mail = formData.mail;
+          dataList[i].emergencyName = formData.emergencyName;
+          dataList[i].emergencyPhone = formData.emergencyPhone;
+          break;
         }
-        localStorage.setItem('JSONList', JSON.stringify(dataList));
-        localStorage.removeItem('Edit Id');
-        window.location.href = '/';
-      } else {
-        const maxId = dataList.reduce((max: any, item: any) => {
-          if (item.id > max) {
-            return item.id;
-          } else {
-            return max;
-          }
-        }, -1);
-        formData.id = maxId + 1;
-        dataList.push(formData);
-        localStorage.setItem('JSONList', JSON.stringify(dataList));
-        window.location.href = '/';
       }
+      localStorage.setItem('JSONList', JSON.stringify(dataList));
+      localStorage.removeItem('Edit Id');
+      window.location.href = '/';
     } else {
-      setErrors(validationErrors);
+      const maxId = dataList.reduce((max: any, item: any) => {
+        if (item.id > max) {
+          return item.id;
+        } else {
+          return max;
+        }
+      }, -1);
+      formData.id = maxId + 1;
+      dataList.push(formData);
+      localStorage.setItem('JSONList', JSON.stringify(dataList));
+      window.location.href = '/';
     }
   };
 
@@ -171,7 +204,7 @@ export default function SignInForm() {
             {/* INPUT NAME */}
             <input
               className={`w-4/5 mt-8 sm:mx-8 sm:mt-8 lg:mx-14 lg:mt-24 xl:mt-24 xl:mx-14 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                errors.name
+                nameError
                   ? 'border-Color-ErrorValidation mb-0'
                   : 'mb-7 border-ColorBorder-Inputs'
               }`}
@@ -183,15 +216,15 @@ export default function SignInForm() {
               required
               onChange={handleInputChange}
             />
-            {errors.name && (
+            {nameError && (
               <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {errors.name}
+                {nameError}
               </span>
             )}
             {/* INPUT PHONE  */}
             <input
               className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                errors.phoneNumber
+                phoneError
                   ? 'border-Color-ErrorValidation mb-0'
                   : 'mb-7 border-ColorBorder-Inputs'
               }`}
@@ -203,9 +236,9 @@ export default function SignInForm() {
               value={formData.phoneNumber}
               onChange={handleInputChange}
             />
-            {errors.phoneNumber && (
+            {phoneError && (
               <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {errors.phoneNumber}
+                {phoneError}
               </span>
             )}
             {/* INPUT MAIL */}
@@ -217,15 +250,15 @@ export default function SignInForm() {
               value={formData.mail}
               onChange={handleInputChange}
               className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                errors.mail
+                emailError
                   ? 'border-Color-ErrorValidation mb-0'
                   : 'mb-7 border-ColorBorder-Inputs'
               }`}
               placeholder="Email"
             />
-            {errors.mail && (
+            {emailError && (
               <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {errors.mail}
+                {emailError}
               </span>
             )}
             {/* INPUT EMERGENCY CONTACT NAME */}
@@ -237,15 +270,15 @@ export default function SignInForm() {
               value={formData.emergencyName}
               onChange={handleInputChange}
               className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                errors.emergencyName
+                emergencyNameError
                   ? 'border-Color-ErrorValidation mb-0'
                   : 'mb-7 border-ColorBorder-Inputs'
               }`}
               placeholder="Emergency Contact Name"
             />
-            {errors.emergencyName && (
+            {emergencyNameError && (
               <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {errors.emergencyName}
+                {emergencyNameError}
               </span>
             )}
             {/* INPUT EMERGENCY CONTACT PHONE */}
@@ -257,15 +290,15 @@ export default function SignInForm() {
               value={formData.emergencyPhone}
               onChange={handleInputChange}
               className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                errors.emergencyPhone
+                emergencyPhoneError
                   ? 'border-Color-ErrorValidation mb-0'
                   : 'mb-12 border-ColorBorder-Inputs'
               }`}
               placeholder="Emergency Contact Number"
             />
-            {errors.emergencyPhone && (
+            {emergencyPhoneError && (
               <span className="text-Color-ErrorValidation mx-8 mb-12">
-                {errors.emergencyPhone}
+                {emergencyPhoneError}
               </span>
             )}
             <button
