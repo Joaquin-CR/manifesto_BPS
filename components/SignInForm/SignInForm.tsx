@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import Input from '../Input/Input';
 
 interface FormData {
   id: number;
@@ -151,34 +152,42 @@ export default function SignInForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
-    if (btnTitle === 'Update') {
-      const id = localStorage.getItem('Edit Id');
-      for (let i = 0; i < dataList.length; i++) {
-        if (dataList[i].id == id) {
-          dataList[i].name = formData.name;
-          dataList[i].phoneNumber = formData.phoneNumber;
-          dataList[i].mail = formData.mail;
-          dataList[i].emergencyName = formData.emergencyName;
-          dataList[i].emergencyPhone = formData.emergencyPhone;
-          break;
+    if (
+      !nameError &&
+      !phoneError &&
+      !emailError &&
+      !emergencyNameError &&
+      !emergencyPhoneError
+    ) {
+      let dataList = JSON.parse(localStorage.getItem('JSONList') ?? 'null');
+      if (btnTitle === 'Update') {
+        const id = localStorage.getItem('Edit Id');
+        for (let i = 0; i < dataList.length; i++) {
+          if (dataList[i].id == id) {
+            dataList[i].name = formData.name;
+            dataList[i].phoneNumber = formData.phoneNumber;
+            dataList[i].mail = formData.mail;
+            dataList[i].emergencyName = formData.emergencyName;
+            dataList[i].emergencyPhone = formData.emergencyPhone;
+            break;
+          }
         }
+        localStorage.setItem('JSONList', JSON.stringify(dataList));
+        localStorage.removeItem('Edit Id');
+        window.location.href = '/';
+      } else {
+        const maxId = dataList.reduce((max: any, item: any) => {
+          if (item.id > max) {
+            return item.id;
+          } else {
+            return max;
+          }
+        }, -1);
+        formData.id = maxId + 1;
+        dataList.push(formData);
+        localStorage.setItem('JSONList', JSON.stringify(dataList));
+        window.location.href = '/';
       }
-      localStorage.setItem('JSONList', JSON.stringify(dataList));
-      localStorage.removeItem('Edit Id');
-      window.location.href = '/';
-    } else {
-      const maxId = dataList.reduce((max: any, item: any) => {
-        if (item.id > max) {
-          return item.id;
-        } else {
-          return max;
-        }
-      }, -1);
-      formData.id = maxId + 1;
-      dataList.push(formData);
-      localStorage.setItem('JSONList', JSON.stringify(dataList));
-      window.location.href = '/';
     }
   };
 
@@ -199,112 +208,72 @@ export default function SignInForm() {
             <label className="text-Color-M&BTN text-xl Montserrat">Back</label>
           </Link>
         </div>
-        <form className="z-10 md:relative" onSubmit={handleSubmit}>
-          <div className="mt-4 sm:mx-5 md:m-16 lg:mx-24 drop-shadow-xl bg-bgColor-Form flex flex-col items-center justify-center xl:mx-96">
+        <form className="z-10 relative" onSubmit={handleSubmit}>
+          <div className="mt-4 sm:mx-5 md:m-16 lg:mx-24 drop-shadow-xl bg-bgColor-Form flex flex-col items-center justify-center xl:mx-96 pt-4">
             {/* INPUT NAME */}
-            <input
-              className={`w-4/5 mt-8 sm:mx-8 sm:mt-8 lg:mx-14 lg:mt-24 xl:mt-24 xl:mx-14 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                nameError
-                  ? 'border-Color-ErrorValidation mb-0'
-                  : 'mb-7 border-ColorBorder-Inputs'
-              }`}
-              placeholder="Full Name"
-              type="text"
-              id="name"
-              name="name"
+            <Input
+              name={'name'}
+              placeholder={'Full Name'}
               value={formData.name}
-              required
-              onChange={handleInputChange}
+              errors={nameError}
+              type={'text'}
+              onValueChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(e);
+              }}
             />
-            {nameError && (
-              <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {nameError}
-              </span>
-            )}
+
             {/* INPUT PHONE  */}
-            <input
-              className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                phoneError
-                  ? 'border-Color-ErrorValidation mb-0'
-                  : 'mb-7 border-ColorBorder-Inputs'
-              }`}
-              placeholder="Phone Number"
-              type="text"
-              id="phoneNumber"
-              name="phoneNumber"
-              required
+            <Input
+              name={'phoneNumber'}
+              placeholder={'Phone Number'}
               value={formData.phoneNumber}
-              onChange={handleInputChange}
+              errors={phoneError}
+              type={'text'}
+              onValueChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(e);
+              }}
             />
-            {phoneError && (
-              <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {phoneError}
-              </span>
-            )}
+
             {/* INPUT MAIL */}
-            <input
-              type="email"
-              id="mail"
-              name="mail"
-              required
+            <Input
+              name={'mail'}
+              placeholder={'Email'}
               value={formData.mail}
-              onChange={handleInputChange}
-              className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                emailError
-                  ? 'border-Color-ErrorValidation mb-0'
-                  : 'mb-7 border-ColorBorder-Inputs'
-              }`}
-              placeholder="Email"
+              errors={emailError}
+              type={'email'}
+              onValueChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(e);
+              }}
             />
-            {emailError && (
-              <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {emailError}
-              </span>
-            )}
+
             {/* INPUT EMERGENCY CONTACT NAME */}
-            <input
-              type="text"
-              id="emergencyName"
-              name="emergencyName"
-              required
+            <Input
+              name={'emergencyName'}
+              placeholder={'Emergency Contact Name'}
               value={formData.emergencyName}
-              onChange={handleInputChange}
-              className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                emergencyNameError
-                  ? 'border-Color-ErrorValidation mb-0'
-                  : 'mb-7 border-ColorBorder-Inputs'
-              }`}
-              placeholder="Emergency Contact Name"
+              errors={emergencyNameError}
+              type={'text'}
+              onValueChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(e);
+              }}
             />
-            {emergencyNameError && (
-              <span className="text-Color-ErrorValidation mx-8 mb-1">
-                {emergencyNameError}
-              </span>
-            )}
+
             {/* INPUT EMERGENCY CONTACT PHONE */}
-            <input
-              type="text"
-              id="emergencyPhone"
-              name="emergencyPhone"
-              required
+            <Input
+              name={'emergencyPhone'}
+              placeholder={'Emergency Contact Number'}
               value={formData.emergencyPhone}
-              onChange={handleInputChange}
-              className={`w-4/5 mx-8 sm:h-11 lg:h-14 xl:h-14 pl-2 py-2 text-black rounded-md border-solid border-2 ${
-                emergencyPhoneError
-                  ? 'border-Color-ErrorValidation mb-0'
-                  : 'mb-12 border-ColorBorder-Inputs'
-              }`}
-              placeholder="Emergency Contact Number"
+              errors={emergencyPhoneError}
+              type={'text'}
+              onValueChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(e);
+              }}
             />
-            {emergencyPhoneError && (
-              <span className="text-Color-ErrorValidation mx-8 mb-12">
-                {emergencyPhoneError}
-              </span>
-            )}
+
             <button
               disabled={disable}
               type="submit"
-              className={`py-3 px-5 mb-12 bg-Color-SubmitForm text-white ${
+              className={`mt-3 py-3 px-5 mb-12 bg-Color-SubmitForm text-white ${
                 disable && 'opacity-70'
               }`}
             >
